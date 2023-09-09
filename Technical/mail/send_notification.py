@@ -2,6 +2,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+from .config import FROM, TO, SMTP_USERNAME, PASSWORD
 
 
 def send_notification(
@@ -35,13 +36,13 @@ def send_notification(
         multipart_message.attach(image)
 
     multipart_message["Subject"] = "Transaction Summary"
-    multipart_message["From"] = "camilodevisaza@gmail.com"
-    multipart_message["To"] = "camilodevisaza@gmail.com"
+    multipart_message["From"] = FROM
+    multipart_message["To"] = TO
 
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    smtp_username = "camilodevisaza@gmail.com"
-    smtp_password = "iitrxjviuqxrtoxa"
+    smtp_username = SMTP_USERNAME
+    smtp_password = PASSWORD
 
     try:
         with smtplib.SMTP(smtp_server, smtp_port) as server:
