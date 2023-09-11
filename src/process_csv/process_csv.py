@@ -42,7 +42,6 @@ def process_csv(reader):
         8: ["August", 0],
         9: ["September", 0],
         10: ["October", 0],
-        
         11: ["November", 0],
         12: ["December", 0],
     }

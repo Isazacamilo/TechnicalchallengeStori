@@ -15,11 +15,12 @@ def read_local_file(file):
 
 
 def read_s3_bucket(file):
-    s3_bucket_url = 'https://s3.amazonaws.com/your-bucket-name'
-    file_key = 'path/to/your/file.csv'
+    # s3_bucket_url = 'https://s3.amazonaws.com/your-bucket-name'
+    # file_key = 'path/to/your/file.csv'
 
     try:
-        s3_file_url = f'{s3_bucket_url}/{file_key}'
+        # s3_file_url = f'{s3_bucket_url}/{file_key}'
+        s3_file_url = f'{file}'
         response = requests.get(s3_file_url)
 
         if response.status_code == 200:
@@ -34,11 +35,14 @@ def read_s3_bucket(file):
     if csv_content is not None:
         with StringIO(csv_content) as csvfile:
             reader = csv.DictReader(csvfile)
-    return reader
+            data = list(reader)
+            transactions_details = process_csv(data)
+            process_csv_to_database(data)
+    return transactions_details
 
 
 def file_location(file):
-    if file.startswith("s3://"):
+    if file.startswith("https://"):
         return read_s3_bucket(file)
 
     else:

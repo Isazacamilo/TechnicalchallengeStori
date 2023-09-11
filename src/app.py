@@ -1,6 +1,6 @@
 from mail.send_notification import send_notification
 from config import FILE
-from context import file_location, read_local_file
+from context import file_location
 
 def main():
     transaction_account = FILE

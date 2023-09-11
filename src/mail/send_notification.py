@@ -32,16 +32,16 @@ def send_notification(
     If you have any questions or concerns regarding your account statement or any other doubt, please do not hesitate to contact our dedicated customer support team at Stori. We are here to assist you.
     Thank you for choosing Stori as your trusted financial partner. We look forward to continuing to serve you and meet your banking needs.</p>
     <p style="font-size: 14px;">Sincerely</span></p>
-    
-    <img src="cid:image_cid" alt="Embedded Image" style="display: block; margin-top: 10px;" />"""
+
+    <img src="https://transactionaccount.s3.us-east-2.amazonaws.com/stori.png" alt="Embedded Image" style="display: block; margin-top: 10px;" />"""
 
     text_part = MIMEText(email_content, "html")
     multipart_message.attach(text_part)
 
-    with open(LOGO, "rb") as image_file:
-        image = MIMEImage(image_file.read(), name="stori.png")
-        image.add_header("Content-ID", "<image_cid>")
-        multipart_message.attach(image)
+    # with open(LOGO, "rb") as image_file:
+    #     image = MIMEImage(image_file.read(), name="stori.png")
+    #     image.add_header("Content-ID", "<image_cid>")
+    #     multipart_message.attach(image)
 
     multipart_message["Subject"] = "Transaction Summary"
     multipart_message["From"] = FROM
