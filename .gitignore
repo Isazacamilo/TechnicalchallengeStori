@@ -2,6 +2,6 @@ venv
 .env
 .vscode
 __pycache__
-*.csv
+.csv
 *.db
 .env

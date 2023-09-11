@@ -12,19 +12,27 @@ def send_notification(
 
     multipart_message = MIMEMultipart("related")
 
-    email_content = f"""<p style="font-size: 16px; font-weight: bold;">Hello {recipient_name},</p>
-    <p style="font-size: 14px;">Following email is to inform you and show your transactions within this current year:</p>
-    <p style="font-size: 14px;">Total balance is:${total_balance:.2f}</span></p>"""
+    email_content = f"""<p style="font-size: 16px; font-weight: bold;">Dear {recipient_name},</p>
+    <p style="font-size: 14px;">Hopes this email finds you in good health. We appreciate your continued trust in Stori, and we are pleased to provide you with your bank account statement for the ongoing year.</p>
+    <p style="font-size: 14px;">Here is an overview of your account activity:</p>
+    <p style="font-size: 14px; font-weight: bold;">Total Balance:</p>
+    <p style="font-size: 14px;">Your current account balance is $ {total_balance:.2f}. This represents the total funds available in your account.</p>
+    <p style="font-size: 14px; font-weight: bold;">Monthly Transactions:</p>
+    
+    """
     monthly_transaction_content = ""
 
     for month, transaction_data in year_month_with_transactions:
         monthly_transaction_content += f'<p style="font-size: 14px;">Number of transactions in {month}: {transaction_data}</p>'
 
     email_content += monthly_transaction_content
-    email_content += f"""<p style="font-size: 14px;">Average debit amount:${average_debit:.2f}</span></p>
-    <p style="font-size: 14px;">Average credit amount:${average_credit:.2f}</span></p>
-    <p style="font-size: 14px;">Please let us know if you have any type of concern.</p>
-    <p style="font-size: 14px;">Regards,</p>
+    email_content += f"""<p style="font-size: 14px;">Average Debit Amount:$ {average_debit:.2f}</span></p>
+    <p style="font-size: 14px;">Average Credit Amount:$ {average_credit:.2f}</span></p>
+    <p style="font-size: 14px;">This statement provides a comprehensive view of your account's financial activity, allowing you to monitor your transactions and manage your finances effectively.
+    If you have any questions or concerns regarding your account statement or any other doubt, please do not hesitate to contact our dedicated customer support team at Stori. We are here to assist you.
+    Thank you for choosing Stori as your trusted financial partner. We look forward to continuing to serve you and meet your banking needs.</p>
+    <p style="font-size: 14px;">Sincerely</span></p>
+    
     <img src="cid:image_cid" alt="Embedded Image" style="display: block; margin-top: 10px;" />"""
 
     text_part = MIMEText(email_content, "html")
