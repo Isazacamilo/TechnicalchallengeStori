@@ -13,7 +13,23 @@ The Account CSV Reader is a project designed to read an account CSV file and sen
 ## Configuration
 To run the project locally, you need to configure a .env file with the following variables:
 - FILE: The path to the CSV file containing account data (e.g., "transactions/account.csv").
-- LOGO: The path to the logo file you want to include in the email (e.g., "./logo/stori.png").
+- LOGO: The path to the logo file you want to include in the email (e.g., "./logo/stori.png"). IT IS NOT MANDATORY SINCE WE ARE READING FROM S3
+
+NOTE: In case you don't have the S3 yet, in send_notification.py, un-comment the with open section and replace the img tag, that is pasted in the original code.
+
+example:
+
+```
+<img src="cid:image_cid" alt="Embedded Image" style="display: block; margin-top: 10px;" />
+
+# with open("./logo/stori.png", "rb") as image_file:
+    #     image = MIMEImage(image_file.read(), name="stori.png")
+    #     image.add_header("Content-ID", "<image_cid>")
+    #     multipart_message.attach(image)
+
+```
+
+
 - PASSWORD: The SMTP password for the email account used to send emails.
 - SMTP_USERNAME: The SMTP username or email address for the email account.
 - FROM: The email address from which the email will be sent.
@@ -38,7 +54,7 @@ NOTE: If the .env that you created is not in same level of app.py or if you want
 
 This project is creating a SQLite db to show the data, if you want to check how is the data inserted and showed in the db, you can install an extension in Visual Studio code to view the db. Extension name: SQLite
 
-NOTE: Once db file is created after running your code in local (not using container) you can right click and elect Open DataBase, that will open a SQLite Explorer and then you can right click and view the table.
+NOTE: Once db file is created after running your code in local (not using container) you can right click and Select Open DataBase, that will open a SQLite Explorer and then you can right click and view the table.
 
 Example of the DB after Inserting data:
 

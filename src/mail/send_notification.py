@@ -34,9 +34,16 @@ def send_notification(
     <p style="font-size: 14px;">Sincerely</span></p>
 
     <img src="https://transactionaccount.s3.us-east-2.amazonaws.com/stori.png" alt="Embedded Image" style="display: block; margin-top: 10px;" />"""
-
+    # <img src="cid:image_cid" alt="Embedded Image" style="display: block; margin-top: 10px;" />
+    
     text_part = MIMEText(email_content, "html")
     multipart_message.attach(text_part)
+
+    # with open("./logo/stori.png", "rb") as image_file:
+    #     image = MIMEImage(image_file.read(), name="stori.png")
+    #     image.add_header("Content-ID", "<image_cid>")
+    #     multipart_message.attach(image)
+    
     multipart_message["Subject"] = "Transaction Summary"
     multipart_message["From"] = FROM
     multipart_message["To"] = TO

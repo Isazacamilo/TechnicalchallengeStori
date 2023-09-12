@@ -25,7 +25,7 @@ def process_transaction_type(transaction):
         CREDITS = "Credit"
         DEBIT = "Debit"
 
-    return (TransactionType.CREDITS).value if transaction < 0 else (TransactionType.DEBIT).value
+    return (TransactionType.DEBIT).value if transaction < 0 else (TransactionType.CREDITS).value
 
 
 def process_csv(reader):
