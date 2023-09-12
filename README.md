@@ -18,6 +18,7 @@ To run the project locally, you need to configure a .env file with the following
 - SMTP_USERNAME: The SMTP username or email address for the email account.
 - FROM: The email address from which the email will be sent.
 - TO: The recipient's email address.
+- DB_URL = "transaction_account.db" This can be the name of the DB that you want to create, just need to add the name.db
 
 Make sure to replace these example values with your actual configuration.
 
@@ -25,11 +26,31 @@ Make sure to replace these example values with your actual configuration.
 
 To build the Docker image, use the following command, replacing <name that you want> with your desired image name:
 
-`docker build -t <name that you want> .`
+`docker build -t <name-that-you-want> .`
 
 To run the Docker container, execute the following command, adjusting the paths as needed for your environment:
 
-`docker run -v $(pwd)/transactions/:/usr/src/app -v $(pwd)/logo/:/usr/src/app -v $(pwd)/transaction_db:/usr/src/app/db technical-app`
+`docker run  <name-that-you-put-in-the-build>`
+
+NOTE: If the .env that you created is not in same level of app.py or if you want to put the account.csv and logo in diferent locations, is possible that you need to add Volumes to the docker run command. If you want to check the db file that code will create you will need to run the container in interactive mode: docker run -it <name-of-your-container-image>
+
+## Check DB
+
+This project is creating a SQLite db to show the data, if you want to check how is the data inserted and showed in the db, you can install an extension in Visual Studio code to view the db. Extension name: SQLite
+
+NOTE: Once db file is created after running your code in local (not using container) you can right click and elect Open DataBase, that will open a SQLite Explorer and then you can right click and view the table.
+
+Example of the DB after Inserting data:
+
+
+|id|	      date	       |          money       |	transaction_type|
+|:--:|:-----------------------:|:------------:|:-------------------:| 
+|1 |	2023-02-15 00:00:00|	45.67	|Debit              |
+|2 |	2023-02-25 00:00:00|	-15.75	|Credit             |
+|3 |	2023-04-20 00:00:00|	23.2	|Debit              |
+|4 |	2023-05-19 00:00:00|	-100.6  |Credit             |
+|5 |	2023-06-09 00:00:00|	400.6	|Debit              |
+
 
 ## Additional Locations
 
