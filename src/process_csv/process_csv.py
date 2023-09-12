@@ -13,7 +13,7 @@ def process_csv_to_database(reader):
         # with open(transaction_account, "r") as csvfile:
         #     reader = csv.DictReader(csvfile)
         for row in reader:
-            date = datetime.strptime(row["date"], "%m/%d").replace(year=2023)
+            date = datetime.strptime(row["Date"], "%m/%d").replace(year=2023)
             transaction_value = float(row["Transaction"])
             data_to_insert.append(
                 (date, transaction_value, process_transaction_type(transaction_value))
@@ -52,7 +52,7 @@ def process_csv(reader):
     #     reader = csv.DictReader(csvfile)
 
     for row in reader:
-        date = datetime.strptime(row["date"], "%m/%d")
+        date = datetime.strptime(row["Date"], "%m/%d")
         transaction = float(row["Transaction"])
 
         total_balance += transaction

@@ -2,6 +2,13 @@
 
 The Account CSV Reader is a project designed to read an account CSV file and send an email to the user containing their account balance and a summary of the number of transactions for each month.
 
+# Assumptions
+
+- Account file has information from curent year
+- File has same structure as the example: Id,Date,Transaction
+- There are no month's with transactions with values 0
+- Date column has month first and second day
+
 
 ## Configuration
 To run the project locally, you need to configure a .env file with the following variables:
@@ -93,7 +100,7 @@ From AWS UI go to Security credencials and created an Access Key:
 
 Click in Done to complete creation of Access Key.
 
-# Configuring your CLI on your local machine
+### Configuring your CLI on your local machine
 
 On your command line (CMD in my case because I'm using windows, commands may change base on the OS)
 
@@ -114,4 +121,52 @@ Default region name [None]: us-east-2 ------> aws zone
 Default output format [None]: json 
 
 ```
+
+After that process run following commands:
+
+`aws configure export-credentials --format env`
+
+- Copy the files that command return into a notepad and run it one by one
+
+`export AWS_ACCESS_KEY_ID=<your-access-key>`
+`export AWS_SECRET_ACCESS_KEY_ID=<your-secret-access-key>`
+
+### Login to ECR
+
+Run the command to login to ECR from your local:
+
+`aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 197012199319.dkr.ecr.us-east-1.amazonaws.com/<your-repository-name>`
+
+197012199319.dkr.ecr.us-east-1.amazonaws.com/<your-container-name>  ------> Replace with your actual link from ECR and repository name
+
+### Build image
+
+NOTE: Make sure to remove .env from the actual directory in which you are running the build (envs variables will be configured in the Lambda)
+
+`docker build -t <same-name-as-ECR-repository> .`
+
+### Tag image
+
+`docker tag <same-name-as-ECR-repository>:latest 197012199319.dkr.ecr.us-east-1.amazonaws.com/<same-name-as-ECR-repository>:latest`
+
+### Push image to ECR
+
+`docker push 197012199319.dkr.ecr.us-east-1.amazonaws.com/<same-name-as-ECR-repository>:latest`
+
+### Lambda
+
+Create a Lambda function using container image option:
+
+https://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/create/function?intent=authorFromImage
+
+Give a name to the function (recomendation same name as ECR repository).
+
+- Click on Browse image and the image that you pushed should be there.
+- Click create function.
+- Access the function and go to configuration -----> Environmental variables.
+- Add all the variables.
+- Click on Image ------> Implement new image and select the latest one.
+- Wait until image load and the test the lambda
+
+If all is fine you should get all the messages in the log on the lambda and an mail in the email that you set in the TO env variable.
 
