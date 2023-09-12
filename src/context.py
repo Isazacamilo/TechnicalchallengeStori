@@ -9,9 +9,7 @@ def read_local_file(file):
     with open(file, "r") as csvfile:
         reader = csv.DictReader(csvfile)
         data = list(reader)
-        transactions_details = process_csv(data)
-        process_csv_to_database(data)
-    return transactions_details
+        return process_csv(data)
 
 
 def read_s3_bucket(file):
@@ -36,9 +34,7 @@ def read_s3_bucket(file):
         with StringIO(csv_content) as csvfile:
             reader = csv.DictReader(csvfile)
             data = list(reader)
-            transactions_details = process_csv(data)
-            process_csv_to_database(data)
-    return transactions_details
+            return  process_csv(data)
 
 
 def get_file_reader(file):

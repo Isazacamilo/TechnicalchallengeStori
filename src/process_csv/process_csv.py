@@ -2,20 +2,23 @@ import csv
 from datetime import datetime
 from enum import Enum
 from db.account_transactions import insert_transactions_to_db
+from config import DB_URL
 
 
 def process_csv_to_database(reader):
-    data_to_insert = []
+    if DB_URL:
+        print(DB_URL)
+        data_to_insert = []
 
-    # with open(transaction_account, "r") as csvfile:
-    #     reader = csv.DictReader(csvfile)
-    for row in reader:
-        date = datetime.strptime(row["date"], "%m/%d").replace(year=2023)
-        transaction_value = float(row["Transaction"])
-        data_to_insert.append(
-            (date, transaction_value, process_transaction_type(transaction_value))
-        )
-    insert_transactions_to_db(data_to_insert)
+        # with open(transaction_account, "r") as csvfile:
+        #     reader = csv.DictReader(csvfile)
+        for row in reader:
+            date = datetime.strptime(row["date"], "%m/%d").replace(year=2023)
+            transaction_value = float(row["Transaction"])
+            data_to_insert.append(
+                (date, transaction_value, process_transaction_type(transaction_value))
+            )
+        insert_transactions_to_db(data_to_insert)
 
 
 def process_transaction_type(transaction):
