@@ -41,9 +41,8 @@ def read_s3_bucket(file):
     return transactions_details
 
 
-def file_location(file):
+def get_file_reader(file):
     if file.startswith("https://"):
-        return read_s3_bucket(file)
-
+        return read_s3_bucket
     else:
-        return read_local_file(file)
+        return read_local_file

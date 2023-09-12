@@ -18,11 +18,11 @@ Make sure to replace these example values with your actual configuration.
 
 To build the Docker image, use the following command, replacing <name that you want> with your desired image name:
 
-docker build -t <name that you want> .
+`docker build -t <name that you want> .`
 
 To run the Docker container, execute the following command, adjusting the paths as needed for your environment:
 
-docker run -v $(pwd)/transactions/:/usr/src/app -v $(pwd)/logo/:/usr/src/app -v $(pwd)/transaction_db:/usr/src/app/db technical-app
+`docker run -v $(pwd)/transactions/:/usr/src/app -v $(pwd)/logo/:/usr/src/app -v $(pwd)/transaction_db:/usr/src/app/db technical-app`
 
 ## Additional Locations
 
