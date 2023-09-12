@@ -37,12 +37,6 @@ def send_notification(
 
     text_part = MIMEText(email_content, "html")
     multipart_message.attach(text_part)
-
-    # with open(LOGO, "rb") as image_file:
-    #     image = MIMEImage(image_file.read(), name="stori.png")
-    #     image.add_header("Content-ID", "<image_cid>")
-    #     multipart_message.attach(image)
-
     multipart_message["Subject"] = "Transaction Summary"
     multipart_message["From"] = FROM
     multipart_message["To"] = TO

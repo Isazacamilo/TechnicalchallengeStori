@@ -7,18 +7,17 @@ from config import DB_URL
 
 def process_csv_to_database(reader):
     if DB_URL:
-        print(DB_URL)
         data_to_insert = []
-
-        # with open(transaction_account, "r") as csvfile:
-        #     reader = csv.DictReader(csvfile)
+        
         for row in reader:
             date = datetime.strptime(row["Date"], "%m/%d").replace(year=2023)
             transaction_value = float(row["Transaction"])
             data_to_insert.append(
                 (date, transaction_value, process_transaction_type(transaction_value))
             )
+        print("Inserting records in database")
         insert_transactions_to_db(data_to_insert)
+        
 
 
 def process_transaction_type(transaction):
@@ -48,8 +47,6 @@ def process_csv(reader):
         11: ["November", 0],
         12: ["December", 0],
     }
-    # with open(transaction_account, "r") as csvfile:
-    #     reader = csv.DictReader(csvfile)
 
     for row in reader:
         date = datetime.strptime(row["Date"], "%m/%d")

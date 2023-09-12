@@ -9,15 +9,13 @@ def read_local_file(file):
     with open(file, "r") as csvfile:
         reader = csv.DictReader(csvfile)
         data = list(reader)
+        process_csv_to_database(data)
         return process_csv(data)
 
 
 def read_s3_bucket(file):
-    # s3_bucket_url = 'https://s3.amazonaws.com/your-bucket-name'
-    # file_key = 'path/to/your/file.csv'
 
     try:
-        # s3_file_url = f'{s3_bucket_url}/{file_key}'
         s3_file_url = f'{file}'
         response = requests.get(s3_file_url)
 
@@ -29,11 +27,11 @@ def read_s3_bucket(file):
         print(f"Error fetching the file from S3: {str(e)}")
         csv_content = None
 
-
     if csv_content is not None:
         with StringIO(csv_content) as csvfile:
             reader = csv.DictReader(csvfile)
             data = list(reader)
+            process_csv_to_database(data)
             return  process_csv(data)
 
 
