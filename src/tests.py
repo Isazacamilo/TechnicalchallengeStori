@@ -2,28 +2,70 @@ import unittest
 from unittest.mock import MagicMock
 from io import StringIO
 import csv
+import sqlite3
+import os
 from process_csv.process_csv import process_csv_to_database, process_csv
+from db.account_transactions import get_connection, create_database, insert_transactions_to_db
+
+
+TEST_DB_PATH = 'test_database.db'
+
+class TestDatabaseFunctions(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+       
+        cls.con = sqlite3.connect(TEST_DB_PATH)
+
+    @classmethod
+    def tearDownClass(cls):
+        
+        cls.con.close()
+        os.remove(TEST_DB_PATH)
+
+    def setUp(self):
+       
+        create_database(self.con)
+
+    def test_insert_transactions(self):
+       
+        data_to_insert = [(1, '2023-01-15', 45.67, 'Debit'), (2, '2023-01-25', -15.75, 'Credit')]
+        insert_transactions_to_db(self.con, data_to_insert)
+
+        
+        cursor = self.con.cursor()
+        cursor.execute("SELECT * FROM transaction_account")
+        rows = cursor.fetchall()
+
+       
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0], (1, '2023-01-15', 45.67, 'Debit'))
+        self.assertEqual(rows[1], (2, '2023-01-25', -15.75, 'Credit'))
+
+    def test_insert_transactions_error_handling(self):
+       
+        invalid_data = [(1, '2023-01-15', 45.67, 'Debit'), (2, 'invalid_date', -15.75, 'Credit')]
+
+       
+        with self.assertRaises(sqlite3.Error):
+            insert_transactions_to_db(self.con, invalid_data)
+
 
 class TestProcessCSVToDatabase(unittest.TestCase):
 
     def test_process_csv_to_database(self):
-        # Sample CSV data as a string
-        csv_data = """id,date,Transaction
-        0,9/15,+45.67
-        1,10/13,-15.75
-        2,11/20,+23.2"""
 
-        # Convert the CSV data string into a StringIO object
+        csv_data = "{'Id':[0,1,2],'Date': [9/15,10/13,11/20],'Transaction':[+45.67,-15.75,+23.2]}"
+
         csv_file = StringIO(csv_data)
 
-        # Create a DictReader to read the data
+
         reader = csv.DictReader(csv_file)
 
-        # Mock insert_transactions_to_db function
+
         with unittest.mock.patch('process_csv.process_csv.insert_transactions_to_db') as mock_insert:
             process_csv_to_database(reader)
 
-            # Assert that insert_transactions_to_db was called with the correct data
             expected_data = [
                 (unittest.mock.ANY, 45.67, 'Credit'),
                 (unittest.mock.ANY, -15.75, 'Debit'),
@@ -34,28 +76,27 @@ class TestProcessCSVToDatabase(unittest.TestCase):
 class TestProcessCSV(unittest.TestCase):
 
     def test_process_csv(self):
-        # Mock the reader
-        reader = [
-            {"date": "01/01", "Transaction": "100"},
-            {"date": "02/01", "Transaction": "-50"},
-            {"date": "03/01", "Transaction": "75"},
-        ]
 
-        # Call the function and capture the results
+        reader = {'Id':[0,1,2],'Date': [9/15,10/13,11/20],'Transaction':[+45.67,-15.75,+23.2]}
+
         result = process_csv(reader)
 
-        # Assert the expected results
         expected_result = (
-            (100 / 3),  # Average Debit
-            (175 / 3),  # Average Credit
-            125.0,  # Total Balance
+            (100 / 3),  
+            (175 / 3),  
+            125.0,  
             [
                 ["January", 1],
                 ["February", 1],
                 ["March", 1],
-            ],  # Year-Month with Transactions
+            ],  
         )
         self.assertEqual(result, expected_result)
 
+
 if __name__ == '__main__':
     unittest.main()
+
+
+
+

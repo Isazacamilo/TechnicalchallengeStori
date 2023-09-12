@@ -11,9 +11,16 @@ def create_database():
 
 
 def insert_transactions_to_db(data_to_insert):
-    create_database()
-    cursor = get_connection().cursor()
-    cursor.executemany("INSERT INTO transaction_account (date, money, transaction_type) VALUES (?, ?, ?)", data_to_insert)
-    get_connection().commit()
-    get_connection().close()
-    print("Successfully inserted records in database")
+    con = get_connection() 
+    cursor = con.cursor()
+    
+    try:
+        create_database() 
+        
+        cursor.executemany("INSERT INTO transaction_account (date, money, transaction_type) VALUES (?, ?, ?)", data_to_insert)
+        con.commit() 
+        print("Successfully inserted records in database")
+    except sqlite3.Error as e:
+        print(f"Error inserting records: {e}")
+    finally:
+        con.close() 
