@@ -52,9 +52,8 @@ Example of the DB after Inserting data:
 |5 |	2023-06-09 00:00:00|	400.6	|Debit              |
 
 
-## Additional Locations
 
-To use different file locations, simply replace the paths in the run command with the new locations you want to use.
+
 
 
 ## AWS configuration S3, ECR and Lambda from AWS CLI
