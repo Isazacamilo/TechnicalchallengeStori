@@ -8,6 +8,9 @@ import json
 
 def lambda_handler(event, context):
     main()
+    return {
+        'statusCode': 200,
+    }
     
 
 
@@ -21,9 +24,7 @@ def main():
     process_csv_to_database(transactions_details)
     print("Sending notification")
     send_notification(*transactions_details)
-    return {
-        'statusCode': 200,
-    }
+    
 
 if __name__ == '__main__':
     main()
