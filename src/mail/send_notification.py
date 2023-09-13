@@ -2,17 +2,15 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
-from config import FROM, TO, SMTP_USERNAME, PASSWORD, LOGO
+from config import FROM, TO, SMTP_USERNAME, PASSWORD, LOGO, RECIPIENT
 
 
-def send_notification(
-    average_debit, average_credit, total_balance, year_month_with_transactions
-):
-    recipient_name = "Camilo"
+def send_notification(average_debit, average_credit, total_balance, year_month_with_transactions):
 
     multipart_message = MIMEMultipart("related")
+    
 
-    email_content = f"""<p style="font-size: 16px; font-weight: bold;">Dear {recipient_name},</p>
+    email_content = f"""<p style="font-size: 16px; font-weight: bold;">Dear {RECIPIENT},</p>
     <p style="font-size: 14px;">Hopes this email finds you in good health. We appreciate your continued trust in Stori, and we are pleased to provide you with your bank account statement for the ongoing year.</p>
     <p style="font-size: 14px;">Here is an overview of your account activity:</p>
     <p style="font-size: 14px; font-weight: bold;">Total Balance:</p>
@@ -44,7 +42,7 @@ def send_notification(
     #     image.add_header("Content-ID", "<image_cid>")
     #     multipart_message.attach(image)
     
-    multipart_message["Subject"] = "Transaction Summary"
+    multipart_message["Subject"] = "Your Stori Transaction Summary for curent year"
     multipart_message["From"] = FROM
     multipart_message["To"] = TO
 
@@ -61,7 +59,7 @@ def send_notification(
                 multipart_message["From"],
                 multipart_message["To"],
                 multipart_message.as_string(),
-            )
+                )
             print("Email sent successfully")
     except Exception as e:
         print(f"An error occurred: {str(e)}")

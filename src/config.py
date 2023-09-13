@@ -3,6 +3,7 @@ from environs import Env
 env = Env()
 env.read_env()
 
+RECIPIENT = env.str("RECIPIENT")
 FILE = env.str("FILE")
 LOGO = env.str("LOGO")
 PASSWORD = env.str("PASSWORD")

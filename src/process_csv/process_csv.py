@@ -12,12 +12,9 @@ def process_csv_to_database(reader):
         for row in reader:
             date = datetime.strptime(row["Date"], "%m/%d").replace(year=2023)
             transaction_value = float(row["Transaction"])
-            data_to_insert.append(
-                (date, transaction_value, process_transaction_type(transaction_value))
-            )
+            data_to_insert.append((date, transaction_value, process_transaction_type(transaction_value)))
         print("Inserting records in database")
-        insert_transactions_to_db(data_to_insert)
-        
+        insert_transactions_to_db(data_to_insert)        
 
 
 def process_transaction_type(transaction):
@@ -65,7 +62,7 @@ def process_csv(reader):
         month: transaction_data
         for month, transaction_data in year.items()
         if transaction_data[1] > 0
-    }
+        }
     year_month_with_transactions = list(year_month_with_transactions.values())
 
     average_debit = total_debit / (len(year_month_with_transactions))
