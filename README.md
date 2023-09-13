@@ -14,7 +14,7 @@ The Account CSV Reader is a project designed to read an account CSV file and sen
 ## Configuration
 To run the project locally, you need to configure a .env file with the following variables:
 
-- RECIPIENT: Name that you want to appear after the Dear, in the email
+- RECIPIENT: Name that you want to appear after the Dear, in the email.
 - FILE: The path to the CSV file containing account data (e.g., "transactions/account.csv").
 - LOGO: The path to the logo file you want to include in the email (e.g., "./logo/stori.png"). IT IS NOT MANDATORY SINCE WE ARE READING FROM S3
 

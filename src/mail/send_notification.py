@@ -42,7 +42,7 @@ def send_notification(average_debit, average_credit, total_balance, year_month_w
     #     image.add_header("Content-ID", "<image_cid>")
     #     multipart_message.attach(image)
     
-    multipart_message["Subject"] = "Your Stori Transaction Summary for curent year"
+    multipart_message["Subject"] = "Your Stori transaction summary for curent year"
     multipart_message["From"] = FROM
     multipart_message["To"] = TO
 
