@@ -32,7 +32,6 @@ example:
 
 ```
 
-
 - PASSWORD: The SMTP password for the email account used to send emails.
 - SMTP_USERNAME: The SMTP username or email address for the email account.
 - FROM: The email address from which the email will be sent.
@@ -41,7 +40,7 @@ example:
 
 Make sure to replace these example values with your actual configuration.
 
-## How to Run in local
+## How to Run in local machine
 
 To build the Docker image, use the following command, replacing <name that you want> with your desired image name:
 
