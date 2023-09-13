@@ -7,13 +7,6 @@ import json
 
 
 def lambda_handler(event, context):
-    main()
-    return {
-        'statusCode': 200,
-    }
-    
-
-def main():
     transaction_account = FILE
     print("Getting file reader")
     file_reader = get_file_reader(transaction_account)
@@ -21,7 +14,12 @@ def main():
     transactions_details = file_reader(transaction_account)
     print("Sending notification")
     send_notification(*transactions_details)
+    return {
+        'statusCode': 200,
+        'Lambda' : "Executed correctly"
+    }
+    
     
 
 if __name__ == '__main__':
-    main()
+    lambda_handler(None, None)

@@ -8,6 +8,7 @@ The Account CSV Reader is a project designed to read an account CSV file and sen
 - File has same structure as the example: Id,Date,Transaction
 - There are no month's with transactions with values 0
 - Date column has month first and second day
+- SMTP used for this is gmail, so gmail account must be coinfigured to allow sending emails
 
 
 ## Configuration
@@ -38,17 +39,17 @@ example:
 
 Make sure to replace these example values with your actual configuration.
 
-## How to Run
+## How to Run in local
 
 To build the Docker image, use the following command, replacing <name that you want> with your desired image name:
 
-`docker build -t <name-that-you-want> .`
+`docker build -t <name-that-you-want> -f Dockerfile.local .`
 
 To run the Docker container, execute the following command, adjusting the paths as needed for your environment:
 
 `docker run  <name-that-you-put-in-the-build>`
 
-NOTE: If the .env that you created is not in same level of app.py or if you want to put the account.csv and logo in diferent locations, is possible that you need to add Volumes to the docker run command. If you want to check the db file that code will create you will need to run the container in interactive mode: docker run -it <name-of-your-container-image>
+NOTE: If the .env that you created is not in same level of handler.py or if you want to put the account.csv and logo in diferent locations, is possible that you need to add Volumes to the docker run command. If you want to check the db file that code will create you will need to run the container in interactive mode: docker run -it <name-of-your-container-image>
 
 ## Check DB
 
@@ -61,11 +62,11 @@ Example of the DB after Inserting data:
 
 |id|	      date	       |          money       |	transaction_type|
 |:--:|:-----------------------:|:------------:|:-------------------:| 
-|1 |	2023-02-15 00:00:00|	45.67	|Debit              |
-|2 |	2023-02-25 00:00:00|	-15.75	|Credit             |
-|3 |	2023-04-20 00:00:00|	23.2	|Debit              |
-|4 |	2023-05-19 00:00:00|	-100.6  |Credit             |
-|5 |	2023-06-09 00:00:00|	400.6	|Debit              |
+|1 |	2023-02-15 00:00:00|	45.67	|Credit              |
+|2 |	2023-02-25 00:00:00|	-15.75	|Debit             |
+|3 |	2023-04-20 00:00:00|	23.2	|Credit              |
+|4 |	2023-05-19 00:00:00|	-100.6  |Debit             |
+|5 |	2023-06-09 00:00:00|	400.6	|Credit              |
 
 
 
@@ -179,7 +180,7 @@ Run the command to login to ECR from your local:
 
 NOTE: Make sure to remove .env from the actual directory in which you are running the build (envs variables will be configured in the Lambda)
 
-`docker build -t <same-name-as-ECR-repository> .`
+`docker build -t <same-name-as-ECR-repository> -f Dockerfile.dev .`
 
 ### Tag image
 
